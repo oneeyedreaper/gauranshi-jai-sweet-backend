@@ -1,9 +1,10 @@
-const nodemailer = require("nodemailer");
-require("dotenv").config();
+import nodemailer from 'nodemailer';
+import dotenv from 'dotenv';
+dotenv.config();
 
 const sendEmail = async ({ subject, html }) => {
   const transporter = nodemailer.createTransport({
-    service: "gmail",
+    service: 'gmail',
     auth: {
       user: process.env.EMAIL_USER,
       pass: process.env.EMAIL_PASS,
@@ -11,7 +12,7 @@ const sendEmail = async ({ subject, html }) => {
   });
 
   const mailOptions = {
-    from: `"Your App" <${process.env.EMAIL_USER}>`,
+    from: `"Mithai Shop" <${process.env.EMAIL_USER}>`,
     to: process.env.ADMIN_EMAIL,
     subject,
     html,
@@ -20,4 +21,4 @@ const sendEmail = async ({ subject, html }) => {
   await transporter.sendMail(mailOptions);
 };
 
-module.exports = sendEmail;
+export default sendEmail;
