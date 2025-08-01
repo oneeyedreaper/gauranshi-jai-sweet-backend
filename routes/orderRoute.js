@@ -4,7 +4,6 @@ import express from 'express'
 import Razorpay from 'razorpay'
 import { authMiddleware } from '../middleware/auth.js'
 import dotenv from 'dotenv';
-import sendEmail from '../utils/sendEmail.js'
 
 dotenv.config();
 
@@ -90,20 +89,6 @@ orderRouter.post('/create', async (req, res) => {
         })
         const savedOrder = await order.save()
         await userModel.findByIdAndUpdate(userId, {cartItems: {}})
-        const emailHtml = `<h2>🛒 New Order Received</h2>
-      <p><strong>Customer Name:</strong> ${name}</p>
-      <p><strong>Phone:</strong> ${phone}</p>
-      <p><strong>Address:</strong> ${address}</p>
-      <p><strong>Total Amount:</strong> ₹${amount}</p>
-      <p><strong>Order Status:</strong> ${status}</p>
-      <h3>Products:</h3>
-      <ul>
-        ${products.map(item => `<li>${item.name} - ₹${item.price} x ${item.quantity}</li>`).join('')}
-      </ul>`;
-      await sendEmail({
-        subject: `New Order from ${name}`,
-        html: emailHtml,
-      })
         res.status(201).json(savedOrder)
     }
     catch(error){
