@@ -9,10 +9,10 @@ import productRouter from './routes/productRoute.js'
 import orderRouter from './routes/orderRoute.js'
 import restaurantRouter from './routes/restaurantRoute.js'
 
+dotenv.config();
+
 const app = express()
 const port = 4000
-
-dotenv.config()
 
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))

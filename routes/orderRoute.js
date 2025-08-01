@@ -4,6 +4,9 @@ import express from 'express'
 import Razorpay from 'razorpay'
 import { authMiddleware } from '../middleware/auth.js'
 import { sendOrderEmail } from '../utils/sendEmail.js'
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const orderRouter = express.Router()
 
