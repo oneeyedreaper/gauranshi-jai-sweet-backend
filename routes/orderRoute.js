@@ -87,9 +87,8 @@ orderRouter.post('/create', async (req, res) => {
         })
         const savedOrder = await order.save()
         await userModel.findByIdAndUpdate(userId, {cartItems: {}})
-        res.status(201).json(savedOrder)
         await sendOrderEmail(savedOrder)
-
+        res.status(201).json(savedOrder)
     }
     catch(error){
         console.log(error)

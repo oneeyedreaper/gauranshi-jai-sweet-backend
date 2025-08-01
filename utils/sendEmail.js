@@ -27,7 +27,12 @@ export const sendOrderEmail = async (order) => {
       `,
     };
 
-    await transporter.sendMail(mailOptions);
+    transporter.sendMail(mailOptions, (error, info) => {
+      if(error)
+          console.error("Email sending failed:", error);
+      else
+          console.log("Email sent successfully:", info.response)
+    });
   } catch (err) {
     console.error(err);
   }
