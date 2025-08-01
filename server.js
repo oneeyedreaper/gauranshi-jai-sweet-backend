@@ -1,18 +1,18 @@
 import express from 'express'
+import dotenv from 'dotenv';
 import cors from 'cors'
 import { connectDB } from './config/db.js'
 import router from './routes/foodRoute.js'
 import userRouter from './routes/userRoute.js'
-import 'dotenv/config'
 import cartRouter from './routes/cartRoute.js'
-import Razorpay from 'razorpay'
-import 'dotenv/config'
 import productRouter from './routes/productRoute.js'
 import orderRouter from './routes/orderRoute.js'
 import restaurantRouter from './routes/restaurantRoute.js'
 
 const app = express()
 const port = 4000
+
+dotenv.config()
 
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
