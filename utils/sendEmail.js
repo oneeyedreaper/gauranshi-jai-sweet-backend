@@ -1,6 +1,7 @@
 import nodemailer from "nodemailer";
 
 export const sendOrderEmail = async (order) => {
+  console.log("✅ sendOrderEmail function triggered");
   try {
     const transporter = nodemailer.createTransport({
       service: "gmail", 
@@ -9,9 +10,6 @@ export const sendOrderEmail = async (order) => {
         pass: process.env.EMAIL_PASS,
       },
     });
-    console.log("Sending to:", process.env.ADMIN_EMAIL);
-  console.log("From:", process.env.EMAIL_USER);
-
 
     const mailOptions = {
       from: process.env.EMAIL_USER,
@@ -29,13 +27,7 @@ export const sendOrderEmail = async (order) => {
         <p><strong>Address:</strong> ${order.address}</p>
       `,
     };
-
-    transporter.sendMail(mailOptions, (error, info) => {
-      if(error)
-          console.error("Email sending failed:", error);
-      else
-          console.log("Email sent successfully:", info.response)
-    });
+    const info = await transporter.sendMail(mailOptions);
   } catch (err) {
     console.error(err);
   }
