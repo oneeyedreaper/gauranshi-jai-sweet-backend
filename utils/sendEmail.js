@@ -9,6 +9,9 @@ export const sendOrderEmail = async (order) => {
         pass: process.env.EMAIL_PASS,
       },
     });
+    console.log("Sending to:", process.env.ADMIN_EMAIL);
+  console.log("From:", process.env.EMAIL_USER);
+
 
     const mailOptions = {
       from: process.env.EMAIL_USER,
