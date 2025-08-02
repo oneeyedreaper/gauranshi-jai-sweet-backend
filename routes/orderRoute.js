@@ -4,6 +4,7 @@ import express from 'express'
 import Razorpay from 'razorpay'
 import { authMiddleware } from '../middleware/auth.js'
 import dotenv from 'dotenv';
+import Notification from '../models/notificationModel.js'
 
 dotenv.config();
 
@@ -88,7 +89,16 @@ orderRouter.post('/create', async (req, res) => {
             date: new Date()
         })
         const savedOrder = await order.save()
+
         await userModel.findByIdAndUpdate(userId, {cartItems: {}})
+
+        const notification = await Notification.create({
+            message: `New order placed by ${name} - Amount ₹${amount}`
+        })
+
+        const io = req.app.get('io')
+        io.emit('newOrder', notification)
+        
         res.status(201).json(savedOrder)
     }
     catch(error){
