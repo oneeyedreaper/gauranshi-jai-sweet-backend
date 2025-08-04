@@ -4,7 +4,6 @@ import express from 'express'
 import Razorpay from 'razorpay'
 import { authMiddleware } from '../middleware/auth.js'
 import dotenv from 'dotenv';
-import { sendOrderNotification } from '../utils/mailer.js'
 
 dotenv.config();
 
@@ -91,8 +90,6 @@ orderRouter.post('/create', async (req, res) => {
         const savedOrder = await order.save()
 
         await userModel.findByIdAndUpdate(userId, {cartItems: {}})
-
-        await sendOrderNotification(savedOrder)
         
         res.status(201).json(savedOrder)
     }
